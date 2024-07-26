@@ -2,11 +2,15 @@ import { JSDOM } from "jsdom";
 
 
 const normalizeUrl = (url) => {
-    try { new URL(url) } catch (error) { 
-        console.log(error);
+    let urlObj
+
+    try { 
+        urlObj = new URL(url) 
+    } catch (error) { 
+        console.log(`Got url error: ${error}`);
         return;
     }
-    const urlObj = new URL(url);
+
     let normalizedUrl = urlObj.hostname + urlObj.pathname;
     if (normalizedUrl.slice(-1) === "/") { 
         normalizedUrl = normalizedUrl.slice(0, -1);
@@ -25,4 +29,28 @@ const getURLsFromHTML = (htmlBody, baseURL) => {
 };
 
 
-export { normalizeUrl, getURLsFromHTML };
+const crawlPage = async (baseURL) => {
+    console.log(`Crawling ${baseURL}`)
+
+    let res
+    try {
+        res = await fetch(baseURL);
+    } catch(err) { 
+        throw new Error(`Got network error: ${err.message}`)
+    };
+
+    if (res.status > 399) {
+        console.log(`Got HTTP error: ${res.status}, ${res.text}`);
+        return;
+    };
+
+    if (!res.headers.get("content-type").includes("text/html")) {
+        console.log("Content is not HTML");
+        return;
+    };
+
+    console.log(await res.text());
+};
+
+
+export { normalizeUrl, getURLsFromHTML, crawlPage };
