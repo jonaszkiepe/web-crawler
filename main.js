@@ -10,7 +10,8 @@ function main() {
         return;
     };
     const baseURL = argv[2]
-    crawlPage(baseURL)
+    const pages = crawlPage(baseURL)
+    console.log(pages)
 
 }
 
