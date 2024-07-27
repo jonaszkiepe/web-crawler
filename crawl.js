@@ -83,7 +83,6 @@ const crawlPage = async (baseURL, currentURL = baseURL, pages = {}) => {
     for (const url of foundURLs) {
         if (url.includes(currentURL) && url.length > currentURL.length) {
             pages = await crawlPage(baseURL, url, pages)
-            console.log(pages)
         }
     }
 

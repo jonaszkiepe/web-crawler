@@ -3,12 +3,12 @@ import { normalizeUrl, getURLsFromHTML } from "./crawl.js";
 
 const url = "http://testing.com/";
 const normalizedUrl = "testing.com";
-const htmlBody = '<a href="https://boot.dev">Learn Backend Development</a> <a href="/darwin">Learn Backend Development</a> ';
+const htmlBody = '<a href="https://boot.dev">Learn Backend Development</a> <a href="/">Learn Backend Development</a> ';
 const baseURL = "https://boot.dev";
-const result = ["https://boot.dev/"];
+const result = ["https://boot.dev/", "https://boot.dev/"];
 
 test("normalizes an url", () => {
-    expect(normalizeUrl(url)).toBe(normalizedUrl);
+    expect(normalizeUrl(url)).toStrictEqual(normalizedUrl);
 });
     
 test("fishes urls", () => {
