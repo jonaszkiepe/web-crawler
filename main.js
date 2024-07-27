@@ -1,7 +1,9 @@
 import { argv } from "node:process";
 import { crawlPage } from "./crawl.js";
+import { printReport } from "./report.js";
 
-function main() {
+async function main() {
+
     if (argv.length < 3) { 
         console.log("url argument is needed");
         return;
@@ -9,9 +11,11 @@ function main() {
         console.log("too many arguments");
         return;
     };
+
     const baseURL = argv[2]
-    const pages = crawlPage(baseURL)
-    console.log(pages)
+    const pages = await crawlPage(baseURL)
+
+    printReport(pages)
 
 }
 
